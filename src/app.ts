@@ -5,9 +5,9 @@ const app: Application = express()
 // parser
 app.use(express.json())
 app.use(cors())
-
+const emon = 5
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')
 })
 
-export default app;
+export default app

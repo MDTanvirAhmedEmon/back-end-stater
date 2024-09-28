@@ -6,7 +6,7 @@ import { customerValidatedSchema } from "../customers/customer.validation";
 
 const createCustomer = async (req: Request, res: Response) => {
     try {
-        const {userInfo, customerData} = req.body;
+        const { userInfo, customerData } = req.body;
         // console.log(userInfo, customerData)
         const validateUserInfo = userValidationSchema.parse(userInfo)
         const validateCustomerData = customerValidatedSchema.parse(customerData)
@@ -16,6 +16,12 @@ const createCustomer = async (req: Request, res: Response) => {
             message: 'user created successfully',
             data: result,
         })
+        // sendResponse(res, {
+        //     statusCode: httpStatus.OK,
+        //     success: true,
+        //     message: 'user created successfully',
+        //     data: result,
+        // });
     }
     catch (error) {
         res.status(400).json({

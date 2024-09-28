@@ -8,14 +8,14 @@ const userSchema = new Schema<IUser>({
   },
   password: {
     type: String,
-    Request: true
+    required: true
   },
   role: {
-    required: true,
+    type: String,
     enum: ['customer', 'admin']
   },
   status: {
-    required: true,
+    type: String,
     enum: ['in-progress', 'blocked']
   },
 }, 

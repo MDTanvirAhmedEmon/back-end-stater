@@ -7,7 +7,7 @@ import { customerValidatedSchema } from "../customers/customer.validation";
 const createCustomer = async (req: Request, res: Response) => {
     try {
         const {userInfo, customerData} = req.body;
-        console.log(userInfo, customerData)
+        // console.log(userInfo, customerData)
         const validateUserInfo = userValidationSchema.parse(userInfo)
         const validateCustomerData = customerValidatedSchema.parse(customerData)
         const result = await customerServices.createCustomer(validateUserInfo, validateCustomerData);

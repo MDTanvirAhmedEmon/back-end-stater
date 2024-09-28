@@ -11,6 +11,7 @@ const createCustomer = async (validateUserInfo: Partial<IUser>, validateCustomer
         status: 'in-progress',
     }
     const result = await User.create(userData);
+    console.log('result', result)
 
     if (result?._id) {
         validateCustomerData.user = result?._id

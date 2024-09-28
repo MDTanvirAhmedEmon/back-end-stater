@@ -19,5 +19,5 @@ export const customerValidatedSchema = z.object({
     profileImageUrl: z.string().url("Profile image URL must be a valid URL").optional(),
     user: z.custom<Types.ObjectId>((val) => Types.ObjectId.isValid(val), {
         message: 'Invalid user ID',
-    }),
+    }).optional(),
 })

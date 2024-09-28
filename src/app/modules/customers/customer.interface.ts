@@ -7,5 +7,5 @@ export type ICustomer = {
     gender: 'male' | 'female' | 'others'
     contactNo: string
     profileImageUrl?: string
-    user: Types.ObjectId
+    user?: Types.ObjectId
 }

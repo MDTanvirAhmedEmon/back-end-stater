@@ -1,8 +1,12 @@
 import { Router } from "express";
 import { customerController } from "./user.controller";
+// import validateRequest from "../../middlewares/validateRequest";
+// import { userValidationSchema } from "./user.validation";
 
 const router = Router();
 
-router.use('/create-customer', customerController.createCustomer)
+router.use('/create-customer',
+    // validateRequest(userValidationSchema),
+     customerController.createCustomer)
 
 export const UserRouter = router;

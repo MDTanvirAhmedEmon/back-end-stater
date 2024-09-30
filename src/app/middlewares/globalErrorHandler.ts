@@ -1,15 +1,15 @@
 import { ErrorRequestHandler } from 'express';
 import { ZodError } from 'zod';
-import config from '../config';
 import AppError from '../errors/AppError';
 import { TErrorSources } from '../interfaces/error';
 import handleZodError from '../errors/handleZodError';
 import handleValidationError from '../errors/handleValidationError';
 import handleCastError from '../errors/handleCastError';
 import handleDuplicateError from '../errors/handleDuplicateError';
+import config from '../config';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.log(err.statusCode);
+  console.log('sdfsf',err.statusCode);
   
   // Setting default values
   let statusCode = 500;
@@ -67,7 +67,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     message,
     errorSources,
     err,
-    stack: config.NODE_ENV === 'development' ? err?.stack : null,
+    stack: config.node_env === 'development' ? err?.stack : null,
   });
 
   // Making sure that next() is called in case of any issues

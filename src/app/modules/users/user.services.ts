@@ -11,11 +11,11 @@ const createCustomer = async (validateUserInfo: Partial<IUser>, validateCustomer
         role: "customer",
         status: 'in-progress',
     }
-    // const isExist = await User.findOne({ email: userData.email })
-    // console.log(isExist)
-    // if (isExist) {
-    //     throw new AppError(400, 'User already exists!')
-    // }
+    const isExist = await User.findOne({ email: userData.email })
+    console.log(isExist)
+    if (isExist) {
+        throw new AppError(400, 'User already exists!')
+    }
 
     const result = await User.create(userData);
     console.log('result', result)

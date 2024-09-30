@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { TErrorSources, TGenericErrorResponse } from "../interfaces/error";
-
+// code 11000 error comes from unique: true, If we set unique: true and do not give unique value then we get this error
 const handleDuplicateError = (err: any): TGenericErrorResponse => {
   // Extract value within double quotes using regex
   const match = err.message.match(/"([^"]*)"/);

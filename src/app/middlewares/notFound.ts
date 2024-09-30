@@ -1,11 +1,15 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
-const notFound = (req: Request, res: Response): any => {
-    return res.status(404).json({
-        success: false,
-        message: 'API Not Found !!',
-        error: '',
+// Not Found Middleware
+const notFound = (req: Request, res: Response, next: NextFunction) => {
+  if (!res.headersSent) {
+    res.status(404).json({
+      success: false,
+      message: 'Route not found!',
     });
+  } else {
+    next();
+  }
 };
 
 export default notFound;

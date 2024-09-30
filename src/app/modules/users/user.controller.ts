@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { customerServices } from "./user.services";
 import { userValidationSchema } from "./user.validation";
 import { customerValidatedSchema } from "../customers/customer.validation";
 
 
-const createCustomer = async (req: Request, res: Response) => {
+const createCustomer = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { userInfo, customerData } = req.body;
         // console.log(userInfo, customerData)
@@ -24,11 +24,7 @@ const createCustomer = async (req: Request, res: Response) => {
         // });
     }
     catch (error) {
-        res.status(400).json({
-            success: false,
-            message: 'something went wrong',
-            data: error,
-        })
+        next(error)
     }
 }
 

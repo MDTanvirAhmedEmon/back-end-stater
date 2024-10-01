@@ -9,7 +9,6 @@ import handleDuplicateError from '../errors/handleDuplicateError';
 import config from '../config';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.log('sdfsf',err.statusCode);
   
   // Setting default values
   let statusCode = 500;

@@ -10,7 +10,8 @@ const userSchema = new Schema<IUser>({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    // select: 0 // when we will get data we will not get password field as we have selected select: 0 
   },
   role: {
     type: String,

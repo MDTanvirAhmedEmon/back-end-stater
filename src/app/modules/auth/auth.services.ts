@@ -1,9 +1,12 @@
+import { Secret } from 'jsonwebtoken';
+import config from '../../config';
 import AppError from '../../errors/AppError';
+import { createToken } from '../../helpers/jwtHelper';
 import { User } from '../users/user.model';
 import { ILoginUser } from './auth.interface';
 import bcrypt from 'bcrypt';
 
-const logInUser = async (logInData: ILoginUser): Promise<ILoginUser | null> => {
+const logInUser = async (logInData: ILoginUser): Promise<any> => {
 
     const isExist = await User.findOne({ email: logInData.email })
     if (!isExist) {
@@ -18,7 +21,27 @@ const logInUser = async (logInData: ILoginUser): Promise<ILoginUser | null> => {
         throw new AppError(401, 'User is blocked!')
     }
 
-    return isExist;
+    const tokenPayload = {
+        email: isExist.email,
+        id: isExist._id,
+        role: isExist.role,
+      }
+    
+      const accessToken = createToken(
+        tokenPayload,
+        config.jwt_access_secret as Secret,
+        config.jwt_access_expires_in as string,
+      )
+      const refreshToken = createToken(
+        tokenPayload,
+        config.jwt_refresh_secret as Secret,
+        config.jwt_refresh_expires_in as string,
+      )
+    
+      return {
+        refreshToken,
+        accessToken,
+      }
 
 }
 

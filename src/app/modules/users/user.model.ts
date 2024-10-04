@@ -24,6 +24,14 @@ const userSchema = new Schema<IUser>({
     type: String,
     enum: ['in-progress', 'blocked']
   },
+  resetPasswordToken: {
+    type: String,
+    default: null
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null
+  }
 },
   {
     timestamps: true

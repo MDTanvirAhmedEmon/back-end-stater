@@ -20,6 +20,15 @@ router.post('/change-password',
     auth(ENUM_USER_ROLE.CUSTOMER, ENUM_USER_ROLE.ADMIN)
     , authController.changePassword)
 
+router.post(
+    '/forget-password',
+    authController.forgetPassword
+);
+
+router.post(
+    '/verify-code',
+    authController.verifyCode
+);
 // change password
 // forget password
 // reset password

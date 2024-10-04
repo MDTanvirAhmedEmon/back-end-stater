@@ -70,8 +70,40 @@ const changePassword = async (req: Request, res: Response, next: NextFunction) =
   }
 }
 
+const forgetPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email } = req.body;
+    const result = await authServices.forgetPassword(email)
+
+    res.status(200).json({
+      success: true,
+      message: 'sent verification code successfully',
+    })
+  }
+  catch (error) {
+    next(error)
+  }
+}
+
+const verifyCode = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = req.body;
+    const result = await authServices.verifyCode(data)
+
+    res.status(200).json({
+      success: true,
+      message: 'code is verified successfully',
+    })
+  }
+  catch (error) {
+    next(error)
+  }
+}
+
 export const authController = {
   logInUser,
   createRefreshToken,
-  changePassword
+  changePassword,
+  forgetPassword,
+  verifyCode,
 }

@@ -12,4 +12,6 @@ export const userValidationSchema = z.object({
     passwordChangedAt: z.date().optional(),
     role: z.enum(['customer', 'admin']).optional(), // role validation is not required because role will not send from client
     status: z.enum(['in-progress', 'blocked']).optional(),
+    resetPasswordToken: z.string().optional(), // Stores the verification code
+    resetPasswordExpires: z.date().optional(),
 });

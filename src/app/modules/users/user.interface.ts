@@ -5,4 +5,6 @@ export type IUser = {
     passwordChangedAt?: Date;
     role: "customer" | "admin";
     status: 'in-progress' | 'blocked';
+    resetPasswordToken?: string;
+    resetPasswordExpires?: Date;
 }

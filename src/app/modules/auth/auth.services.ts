@@ -5,6 +5,7 @@ import { createToken, verifyToken } from '../../helpers/jwtHelper';
 import { User } from '../users/user.model';
 import { ILoginUser } from './auth.interface';
 import bcrypt from 'bcrypt';
+import { sendEmail } from '../../utils/sendEmail';
 
 const logInUser = async (logInData: ILoginUser): Promise<any> => {
 
@@ -106,7 +107,7 @@ const changePassword = async (user: any, data: { oldPassword: string, newPasswor
   }
   const hashedNewPassword = await bcrypt.hash(data.newPassword, Number(config.bcrypt_salt_rounds))
   console.log(hashedNewPassword);
-  const result =  await User.findOneAndUpdate(
+  const result = await User.findOneAndUpdate(
     {
       _id: user?.id,
       role: user?.role,
@@ -116,11 +117,74 @@ const changePassword = async (user: any, data: { oldPassword: string, newPasswor
       passwordChangedAt: new Date(),
     },
   );
-   return null;
+  return null;
 }
+
+
+const forgetPassword = async (email: any): Promise<any> => {
+
+  const isExist = await User.findOne({ email: email })
+  console.log(isExist);
+  if (!isExist) {
+    throw new AppError(404, 'User not found!')
+  }
+  if (isExist.status === 'blocked') {
+    throw new AppError(401, 'User is blocked!')
+  }
+  // Generate a 5-digit reset token (verification code)
+  const resetToken = Math.floor(10000 + Math.random() * 90000).toString(); // 5-digit random number
+
+  // Set reset token expiration to 10 minutes (600,000 milliseconds)
+  const passwordExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
+
+  // isExist.resetPasswordToken = resetToken
+  // isExist.resetPasswordExpires = passwordExpires
+  console.log(isExist.email);
+  sendEmail(isExist?.email, resetToken)
+  const result = await User.findOneAndUpdate(
+    { email: email },
+    {
+      resetPasswordToken: resetToken,
+      resetPasswordExpires: passwordExpires
+    },
+  );
+  return null;
+}
+
+
+const verifyCode = async (data: any): Promise<any> => {
+
+  const isExist = await User.findOne({ email: data?.email })
+  if (!isExist) {
+    throw new AppError(404, 'User not found!')
+  }
+
+  const tokenMatch = await User.findOne({
+    email: isExist.email,
+    resetPasswordToken: data?.tokenCode,
+  });
+
+  if (!tokenMatch) {
+    throw new AppError(400, 'Invalid verification code');
+  }
+  const expiresDate = await User.findOne({
+    email: isExist.email,
+    resetPasswordExpires: { $gt: new Date(Date.now()) }
+  });
+
+  if (!expiresDate) {
+    throw new AppError(400, 'Verification code expired');
+  }
+
+  return null;
+}
+
+
 
 export const authServices = {
   logInUser,
   createRefreshToken,
   changePassword,
+  forgetPassword,
+  verifyCode,
 }

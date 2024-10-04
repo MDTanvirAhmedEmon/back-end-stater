@@ -100,10 +100,26 @@ const verifyCode = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const resetPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = req.body;
+    const result = await authServices.resetPassword(data)
+
+    res.status(200).json({
+      success: true,
+      message: 'Reset password successfully',
+    })
+  }
+  catch (error) {
+    next(error)
+  }
+}
+
 export const authController = {
   logInUser,
   createRefreshToken,
   changePassword,
   forgetPassword,
   verifyCode,
+  resetPassword,
 }

@@ -29,6 +29,11 @@ router.post(
     '/verify-code',
     authController.verifyCode
 );
+
+router.post(
+    '/reset-password',
+    authController.resetPassword
+);
 // change password
 // forget password
 // reset password

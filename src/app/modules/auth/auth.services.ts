@@ -106,7 +106,6 @@ const changePassword = async (user: any, data: { oldPassword: string, newPasswor
     throw new AppError(401, 'Password do not matched!');
   }
   const hashedNewPassword = await bcrypt.hash(data.newPassword, Number(config.bcrypt_salt_rounds))
-  console.log(hashedNewPassword);
   const result = await User.findOneAndUpdate(
     {
       _id: user?.id,
@@ -124,7 +123,6 @@ const changePassword = async (user: any, data: { oldPassword: string, newPasswor
 const forgetPassword = async (email: any): Promise<any> => {
 
   const isExist = await User.findOne({ email: email })
-  console.log(isExist);
   if (!isExist) {
     throw new AppError(404, 'User not found!')
   }
@@ -139,7 +137,6 @@ const forgetPassword = async (email: any): Promise<any> => {
 
   // isExist.resetPasswordToken = resetToken
   // isExist.resetPasswordExpires = passwordExpires
-  console.log(isExist.email);
   sendEmail(isExist?.email, resetToken)
   const result = await User.findOneAndUpdate(
     { email: email },
@@ -180,6 +177,49 @@ const verifyCode = async (data: any): Promise<any> => {
 }
 
 
+const resetPassword = async (data: any): Promise<any> => {
+
+  const isExist = await User.findOne({ email: data?.email })
+  if (!isExist) {
+    throw new AppError(404, 'User not found!')
+  }
+
+  const tokenMatch = await User.findOne({
+    email: isExist.email,
+    resetPasswordToken: data?.tokenCode,
+  });
+
+  if (!tokenMatch) {
+    throw new AppError(400, 'Invalid verification code');
+  }
+  const expiresDate = await User.findOne({
+    email: isExist.email,
+    resetPasswordExpires: { $gt: new Date(Date.now()) }
+  });
+
+  if (!expiresDate) {
+    throw new AppError(400, 'Verification code expired');
+  }
+
+  const hashedNewPassword = await bcrypt.hash(data.newPassword, Number(config.bcrypt_salt_rounds))
+
+  const result = await User.findOneAndUpdate(
+    {
+      email: data?.email,
+      resetPasswordToken: data?.tokenCode,
+      resetPasswordExpires: { $gt: new Date(Date.now()) }
+    },
+    {
+      password: hashedNewPassword,
+      passwordChangedAt: new Date(),
+      resetPasswordToken: null,
+      resetPasswordExpires: null
+    },
+  );
+  return null;
+}
+
+
 
 export const authServices = {
   logInUser,
@@ -187,4 +227,5 @@ export const authServices = {
   changePassword,
   forgetPassword,
   verifyCode,
+  resetPassword,
 }

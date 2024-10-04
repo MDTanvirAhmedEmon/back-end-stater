@@ -55,13 +55,14 @@ const createRefreshToken = async (req: Request, res: Response, next: NextFunctio
 const changePassword = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = req.user;
+    const data = req.body;
     console.log(user)
-    // const result = await authServices.changePassword(user)
+    console.log(data)
+    const result = await authServices.changePassword(user, data)
 
     res.status(200).json({
       success: true,
       message: 'changed password successfully',
-      // data: result,
     })
   }
   catch (error) {

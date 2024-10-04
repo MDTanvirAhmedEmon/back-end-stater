@@ -2,6 +2,8 @@ import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
 import { AuthValidation } from "./auth.validation";
 import { authController } from "./auth.controller";
+import auth from "../../middlewares/auth";
+import { ENUM_USER_ROLE } from "../../enums/user";
 
 const router = Router();
 
@@ -14,7 +16,9 @@ router.post('/refresh-token',
     authController.createRefreshToken
 )
 
-router.post('/change-password', authController.changePassword)
+router.post('/change-password',
+    auth(ENUM_USER_ROLE.CUSTOMER, ENUM_USER_ROLE.ADMIN)
+    , authController.changePassword)
 
 // change password
 // forget password

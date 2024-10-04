@@ -13,6 +13,9 @@ const userSchema = new Schema<IUser>({
     required: true,
     // select: 0 // when we will get data we will not get password field as we have selected select: 0 
   },
+  passwordChangedAt: {
+    type: Date,
+  },
   role: {
     type: String,
     enum: ['customer', 'admin']

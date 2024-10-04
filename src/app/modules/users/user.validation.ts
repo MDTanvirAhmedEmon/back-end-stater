@@ -9,6 +9,7 @@ export const userValidationSchema = z.object({
         required_error: "Password is required",
         invalid_type_error: "Password must be a string"
     }).min(8, "Password must be at least 8 characters long"),
+    passwordChangedAt: z.date().optional(),
     role: z.enum(['customer', 'admin']).optional(), // role validation is not required because role will not send from client
     status: z.enum(['in-progress', 'blocked']).optional(),
 });

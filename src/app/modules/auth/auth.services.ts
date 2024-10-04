@@ -90,43 +90,33 @@ const createRefreshToken = async (token: string): Promise<any> => {
 
 
 
-const changePassword = async (logInData: ILoginUser): Promise<any> => {
+const changePassword = async (user: any, data: { oldPassword: string, newPassword: string }): Promise<null> => {
 
-  const isExist = await User.findOne({ email: logInData.email })
+  const isExist = await User.findOne({ email: user.email })
   if (!isExist) {
     throw new AppError(404, 'User not found!')
-  }
-
-  const matchedPassword = await bcrypt.compare(logInData?.password, isExist?.password);
-  if (!matchedPassword) {
-    throw new AppError(401, 'Password do not matched!');
   }
   if (isExist.status === 'blocked') {
     throw new AppError(401, 'User is blocked!')
   }
 
-  const tokenPayload = {
-    email: isExist.email,
-    id: isExist._id,
-    role: isExist.role,
+  const matchedPassword = await bcrypt.compare(data?.oldPassword, isExist?.password);
+  if (!matchedPassword) {
+    throw new AppError(401, 'Password do not matched!');
   }
-
-  const accessToken = createToken(
-    tokenPayload,
-    config.jwt_access_secret as Secret,
-    config.jwt_access_expires_in as string,
-  )
-  const refreshToken = createToken(
-    tokenPayload,
-    config.jwt_refresh_secret as Secret,
-    config.jwt_refresh_expires_in as string,
-  )
-
-  return {
-    refreshToken,
-    accessToken,
-  }
-
+  const hashedNewPassword = await bcrypt.hash(data.newPassword, Number(config.bcrypt_salt_rounds))
+  console.log(hashedNewPassword);
+  const result =  await User.findOneAndUpdate(
+    {
+      _id: user?.id,
+      role: user?.role,
+    },
+    {
+      password: hashedNewPassword,
+      passwordChangedAt: new Date(),
+    },
+  );
+   return null;
 }
 
 export const authServices = {

@@ -14,5 +14,13 @@ router.post('/refresh-token',
     authController.createRefreshToken
 )
 
+router.post('/change-password', authController.changePassword)
+
+// change password
+// forget password
+// reset password
+
+
+
 
 export const AuthRouter = router;

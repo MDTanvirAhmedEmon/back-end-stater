@@ -10,9 +10,10 @@ import initialChats from './app/modules/chats/chats.socket';
 const app: Application = express()
 
 
-const server = createServer(app);
-const io = new Server(server);
+const httpServer = createServer(app);
+const io = new Server(httpServer);
 initialChats(io)
+app.set("io",io)
 
 // parser
 app.use(express.json())
@@ -27,4 +28,5 @@ app.get('/', (req: Request, res: Response) => {
 })
 app.use(notFound)
 
-export default app
+// export default app
+export default httpServer

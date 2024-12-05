@@ -6,9 +6,10 @@ const initialChats = (io: Server) => {
     chatNamespace.on('connection', (socket) => {
         console.log('User', socket.id);
 
+        //receive using on send using emit
         socket.on("send", (data) => {
             console.log(data, 'ddddddd');
-            socket.emit("reci",{data:"sender emon"})
+            socket.emit("reci", { data: "sender emon" })
         })
     })
 }

@@ -4,7 +4,15 @@ import router from './app/routes'
 import notFound from './app/middlewares/notFound'
 import cookieParser from 'cookie-parser';
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import initialChats from './app/modules/chats/chats.socket';
 const app: Application = express()
+
+
+const server = createServer(app);
+const io = new Server(server);
+initialChats(io)
 
 // parser
 app.use(express.json())

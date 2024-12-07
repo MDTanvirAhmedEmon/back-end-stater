@@ -38,6 +38,11 @@ const initialChats = (io: Server) => {
                 console.error("Error in sending message:", error);
             }
         })
+
+        socket.on('disconnect', () => {
+            console.log(`User disconnected: ${socket.id}`);
+            // You can perform any cleanup or logging here
+        });
     });
 };
 

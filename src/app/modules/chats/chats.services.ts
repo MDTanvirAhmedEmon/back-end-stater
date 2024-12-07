@@ -15,7 +15,19 @@ const createAdminMessage = async (data: IChatAdmin): Promise<any> => {
     return result;
 }
 
+const getUserChats = async (data:any):Promise<IChat[]> => {
+
+    const result = await Chats.find({
+        $or: [
+            { sender: data?.sender, receiver: data?.receiver },
+            { sender: data?.receiver, receiver: data?.sender }
+        ]
+    })
+    return result
+}
+
 export const messageServices = {
     createMessage,
     createAdminMessage,
+    getUserChats,
 }

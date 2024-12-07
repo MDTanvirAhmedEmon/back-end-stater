@@ -6,7 +6,7 @@ const superUser = {
     email: "superadmin777@gmail.com",
     password: "superAdmin777%$",
     role: "super_admin",
-    chatId: "admin77De54%#Ed",
+    chatId: "admin77De5497Ed",
     status: "in-progress",
 }
 

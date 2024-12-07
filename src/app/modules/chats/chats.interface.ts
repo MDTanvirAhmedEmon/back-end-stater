@@ -14,7 +14,7 @@ export type IChat = {
 //     message: string;  
 // };
 export type IChatAdmin = {
-    sender: Types.ObjectId | string;
-    receiver: Types.ObjectId | string;
+    sender: string;
+    receiver: string;
     message: string;  
 };

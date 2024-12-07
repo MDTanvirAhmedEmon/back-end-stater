@@ -64,11 +64,11 @@ export const Chats = model<IChat>('Chats', chatsSchema);
 const chatsAdminSchema: Schema<IChatAdmin> = new Schema(
     {
         sender: {
-          type: Schema.Types.Mixed,  // Allowing both ObjectId and string
+          type: String,  // Allowing both ObjectId and string
           required: [true, 'Sender is required'],
         },
         receiver: {
-          type: Schema.Types.Mixed,  // Allowing both ObjectId and string
+          type: String,  // Allowing both ObjectId and string
           required: [true, 'Receiver is required'],
         },
         message: {

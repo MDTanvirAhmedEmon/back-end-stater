@@ -33,7 +33,7 @@ const adminSchema = new Schema<IAdmin>({
     },
     chatId: {
         type: String,
-        default: 'admin77De54%#Ed'
+        default: 'admin77De5497Ed'
     },
     status: {
         type: String,

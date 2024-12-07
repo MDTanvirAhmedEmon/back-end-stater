@@ -17,13 +17,13 @@ export const adminValidationSchema = z.object({
     contactNo: z.string({
         required_error: "Contact number is required",
         invalid_type_error: "Contact number must be a string",
-    }),
+    }).optional(),
     profileImageUrl: z.string().url("Invalid URL format").optional(),
     password: z.string({
         required_error: "Password is required",
         invalid_type_error: "Password must be a string",
     }).min(8, "Password must be at least 8 characters long"),
-    role: z.literal("admin", {
+    role: z.string({
         required_error: "Role must be 'admin'",
         invalid_type_error: "Role must be a string with value 'admin'",
     }).optional(),

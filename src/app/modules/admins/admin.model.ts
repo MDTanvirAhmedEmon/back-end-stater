@@ -18,7 +18,6 @@ const adminSchema = new Schema<IAdmin>({
     },
     contactNo: {
         type: String,
-        required: true
     },
     profileImageUrl: {
         type: String
@@ -29,7 +28,7 @@ const adminSchema = new Schema<IAdmin>({
     },
     role: {
         type: String,
-        enum: ["admin"],
+        enum: ["admin", "super_admin"],
         default: "admin",
     },
     chatId: {

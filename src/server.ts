@@ -3,6 +3,7 @@ import { Server } from 'http';
 import mongoose from 'mongoose'
 import config from './app/config'
 import httpServer from './app';
+import seedSuperAdmin from './app/utils/createSuperAdmin';
 
 let server: Server;
 
@@ -11,6 +12,7 @@ async function main() {
 
     await mongoose.connect(config.database_url as string)
     // socket = app.get("io")
+    await seedSuperAdmin();
     server = httpServer.listen(config.port, () => {
       console.log(`Example app listening on port ${config.port}`)
     })

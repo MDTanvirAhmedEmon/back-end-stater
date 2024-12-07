@@ -3,10 +3,10 @@ export type IAdmin = {
     firstName: string
     lastName: string
     email: string
-    contactNo: string
+    contactNo?: string
     profileImageUrl?: string
     password: string
-    role: "admin"
+    role: "admin" | "super_admin"
     chatId: string
-    status: 'in-progress' | 'blocked';
+    status: 'in-progress' | 'blocked'
 }

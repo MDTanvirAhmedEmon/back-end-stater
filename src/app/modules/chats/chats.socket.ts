@@ -9,7 +9,7 @@ const initialChats = (io: Server) => {
         //receive using on send using emit
         socket.on("send", (data) => {
             console.log(data, 'ddddddd');
-            socket.emit("reci", { data: "sender emon" })
+            socket.emit("received", { data: "sender emon" })
         })
     })
 }

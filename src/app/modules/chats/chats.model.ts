@@ -6,14 +6,12 @@ const chatsSchema: Schema<IChat> = new Schema({
     {
         type: Schema.Types.ObjectId,
         required: [true, 'User id is required'],
-        unique: true,
         ref: 'Customer',
     },
     receiver:
     {
         type: Schema.Types.ObjectId,
         required: [true, 'User id is required'],
-        unique: true,
         ref: 'Customer',
     },
     message:

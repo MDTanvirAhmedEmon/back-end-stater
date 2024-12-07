@@ -30,7 +30,7 @@ const adminSchema = new Schema<IAdmin>({
     role: {
         type: String,
         enum: ["admin"],
-        required: true
+        default: "admin",
     },
     chatId: {
         type: String,
@@ -40,7 +40,6 @@ const adminSchema = new Schema<IAdmin>({
         type: String,
         enum: ["in-progress", "blocked"],
         default: 'in-progress',
-        required: true
     },
 }, {
     timestamps: true,

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const adminValidationSchema = z.object({
+export const adminValidationSchema = z.object({
     firstName: z.string({
         required_error: "First name is required",
         invalid_type_error: "First name must be a string",
@@ -26,11 +26,11 @@ const adminValidationSchema = z.object({
     role: z.literal("admin", {
         required_error: "Role must be 'admin'",
         invalid_type_error: "Role must be a string with value 'admin'",
-    }),
+    }).optional(),
     chatId: z.string({
         required_error: "Chat ID is required",
         invalid_type_error: "Chat ID must be a string",
-    }),
+    }).optional(),
     status: z.enum(["in-progress", "blocked"], {
         required_error: "Status must be 'in-progress' or 'blocked'",
     }).optional(),

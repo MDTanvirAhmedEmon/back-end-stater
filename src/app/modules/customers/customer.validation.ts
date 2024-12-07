@@ -15,7 +15,7 @@ export const customerValidatedSchema = z.object({
         invalid_type_error: "Gender must be 'male', 'female', or 'others'"
     }),
 
-    contactNo: z.string().min(5, "Contact number is too short").max(20, "Number is too long"),
+    contactNo: z.string().min(5, "Contact number is too short").max(20, "Contact Number is too long"),
     profileImageUrl: z.string().url("Profile image URL must be a valid URL").optional(),
     user: z.custom<Types.ObjectId>((val) => Types.ObjectId.isValid(val), {
         message: 'Invalid user ID',

@@ -26,6 +26,7 @@ const logInUser = async (logInData: ILoginUser): Promise<any> => {
     email: isExist.email,
     id: isExist._id,
     role: isExist.role,
+    status: isExist.status
   }
 
   const accessToken = createToken(
@@ -75,6 +76,7 @@ const createRefreshToken = async (token: string): Promise<any> => {
     email: isExist.email,
     id: isExist._id,
     role: isExist.role,
+    status: isExist.status
   }
 
   const accessToken = createToken(

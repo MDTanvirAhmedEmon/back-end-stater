@@ -9,7 +9,6 @@ const auth =
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const token = req.headers.authorization
-        console.log(token);
         if (!token) {
           throw new AppError(401, 'You are not authorized')
         }

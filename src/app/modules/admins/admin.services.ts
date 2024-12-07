@@ -6,7 +6,7 @@ import { Admin } from "./admin.model"
 const createAdmin = async (data: IAdmin): Promise<IAdmin> => {
     const isExist = await Admin.findOne({ email: data?.email })
     if (isExist) {
-        throw new AppError(400, 'admin already exist!')
+        throw new AppError(409, 'Admin already exist!')
     }
     const result = await Admin.create(data)
     return result

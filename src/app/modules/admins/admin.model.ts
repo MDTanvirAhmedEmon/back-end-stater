@@ -39,6 +39,7 @@ const adminSchema = new Schema<IAdmin>({
     status: {
         type: String,
         enum: ["in-progress", "blocked"],
+        default: 'in-progress',
         required: true
     },
 }, {

@@ -7,5 +7,6 @@ export type IAdmin = {
     profileImageUrl?: string
     password: string
     role: "admin"
+    chatId: string
     status: 'in-progress' | 'blocked';
 }

@@ -32,6 +32,10 @@ const adminSchema = new Schema<IAdmin>({
         enum: ["admin"],
         required: true
     },
+    chatId: {
+        type: String,
+        default: 'admin77De54%#Ed'
+    },
     status: {
         type: String,
         enum: ["in-progress", "blocked"],

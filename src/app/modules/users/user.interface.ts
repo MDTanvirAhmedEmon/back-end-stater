@@ -3,7 +3,7 @@ export type IUser = {
     email: string;
     password: string;
     passwordChangedAt?: Date;
-    role: "customer" | "admin";
+    role: "customer";
     status: 'in-progress' | 'blocked';
     resetPasswordToken?: string;
     resetPasswordExpires?: Date;

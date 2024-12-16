@@ -42,10 +42,15 @@ const getAdminChats = async (data: any) => {
 
 };
 
+const getAlUserWithIChats = async () => {
+
+}
+ 
 
 export const messageServices = {
     createMessage,
     createAdminMessage,
     getUserChats,
     getAdminChats,
+    getAlUserWithIChats,
 }

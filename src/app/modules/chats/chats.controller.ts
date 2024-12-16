@@ -36,7 +36,24 @@ const getAdminChats = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
+const getAlUserWithIChats = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+
+    const result = await messageServices.getAlUserWithIChats()
+
+    res.status(200).json({
+      success: true,
+      message: 'Get All Users I Chats Successfully',
+      data: result,
+    })
+  }
+  catch (error) {
+    next(error)
+  }
+}
+
 export const chatsController = {
     getUserChats,
     getAdminChats,
+    getAlUserWithIChats,
 }

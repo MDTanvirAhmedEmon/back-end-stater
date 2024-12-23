@@ -42,10 +42,75 @@ const getAdminChats = async (data: any) => {
 
 };
 
-const getAlUserWithIChats = async () => {
+const getAlUserWithIChats = async (currentUserId: string) => {
+    try {
+        const result = await Chats.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { sender: new Types.ObjectId(currentUserId) },
+                        { receiver: new Types.ObjectId(currentUserId) },
+                    ],
+                },
+            },
+            {
+                $project: {
+                    otherUser: {
+                        $cond: {
+                            if: { $eq: ["$sender", new Types.ObjectId(currentUserId)] },
+                            then: "$receiver",
+                            else: "$sender",
+                        },
+                    },
+                    message: 1,
+                    createdAt: 1,
+                },
+            },
+            {
+                $sort: { createdAt: -1 },
+            },
+            {
+                $group: {
+                    _id: "$otherUser",
+                    lastMessage: { $first: "$message" },
+                    lastMessageDate: { $first: "$createdAt" },
+                },
+            },
+            {
+                $lookup: {
+                    from: "customers",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "userDetails",
+                },
+            },
+            {
+                $unwind: "$userDetails",
+            },
+            {
+                $project: {
+                    _id: 1,
+                    firstName: "$userDetails.firstName",
+                    lastName: "$userDetails.lastName",
+                    contactNo: "$userDetails.contactNo",
+                    profileImageUrl: "$userDetails.profileImageUrl", // Include profile image
+                    lastMessage: 1,
+                    lastMessageDate: 1,
+                },
+            },
+            {
+                $sort: { lastMessageDate: -1 },
+            },
+        ]);
 
+        return result;
+
+    } catch (error) {
+        console.error("Error fetching chat users:", error);
+        throw error;
+    }
 }
- 
+
 
 export const messageServices = {
     createMessage,

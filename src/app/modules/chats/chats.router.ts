@@ -6,6 +6,6 @@ const router = Router();
 
 router.get('/user-chats', chatsController.getUserChats)
 router.get('/admin-chats', chatsController.getAdminChats)
-router.get('/all-users-with-chats', chatsController.getAlUserWithIChats)
+router.get('/all-users-with-chats/:id', chatsController.getAlUserWithIChats)
 
 export const ChatsRouter = router

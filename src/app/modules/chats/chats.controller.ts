@@ -38,8 +38,8 @@ const getAdminChats = async (req: Request, res: Response, next: NextFunction) =>
 
 const getAlUserWithIChats = async (req: Request, res: Response, next: NextFunction) => {
   try {
-
-    const result = await messageServices.getAlUserWithIChats()
+    const currentUserId = req.params.id
+    const result = await messageServices.getAlUserWithIChats(currentUserId)
 
     res.status(200).json({
       success: true,

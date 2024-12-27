@@ -93,7 +93,7 @@ const getAlUserWithIChats = async (currentUserId: string) => {
                     firstName: "$userDetails.firstName",
                     lastName: "$userDetails.lastName",
                     contactNo: "$userDetails.contactNo",
-                    profileImageUrl: "$userDetails.profileImageUrl", // Include profile image
+                    profileImageUrl: "$userDetails.profileImageUrl",
                     lastMessage: 1,
                     lastMessageDate: 1,
                 },
